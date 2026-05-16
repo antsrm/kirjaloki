@@ -2,6 +2,7 @@
 
 ## Sovelluksen toiminnot
 
+- Sovelluksessa käyttäjät pystyvät jakamaan kirja-arvioitaan ja lukukokemuksiaan. Kirja-arviossa näkyvät esimerkiksi kirjan nimi, kirjailija, arvosana ja käyttäjän kirjoittama arvio.
 - Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 - Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan kirja-arvioita.
 - Käyttäjä näkee sovellukseen lisätyt kirja-arviot.
