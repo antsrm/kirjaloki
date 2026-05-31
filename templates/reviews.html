@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>Kirja-arviot</h2>
+
+<p>
+    <a class="button" href="/new_review">Lisää uusi arvio</a>
+</p>
+
+{% for review in reviews %}
+
+<div class="review-card">
+    <h3>{{ review.title }}</h3>
+
+    <p><strong>Kirjailija:</strong> {{ review.author }}</p>
+
+    <p><strong>Arvion kirjoittaja:</strong> {{ review.username }}</p>
+
+    <p><strong>Arvosana:</strong> {{ review.rating }}/5</p>
+
+    <p>{{ review.review }}</p>
+
+    {% if session.user_id == review.user_id %}
+
+    <div class="actions">
+        <a class="button" href="/edit_review/{{ review.id }}">Muokkaa</a>
+
+        <form action="/delete_review/{{ review.id }}" method="post">
+            <input class="button danger" type="submit" value="Poista">
+        </form>
+    </div>
+
+    {% endif %}
+</div>
+
+{% endfor %}
+
+{% endblock %}

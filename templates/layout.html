@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kirjaloki</title>
+    
+    <link rel="stylesheet" href="/static/style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="page">
+
+    <header>
+        <h1>Kirjaloki</h1>
+
+        <nav>
+
+            <div class="nav-left">
+                <a class="button" href="/">Etusivu</a>
+                <a class="button" href="/reviews">Kirja-arviot</a>
+                <a class="button" href="/new_review">Uusi arvio</a>
+                <a class="button" href="/search">Haku</a>
+            </div>
+
+            <div class="nav-right">
+                {% if session.user_id %}
+                    <span class="login-info">
+                        Kirjautunut: {{ session.username }}
+                    </span>
+
+                    <a class="button" href="/logout">
+                        Kirjaudu ulos
+                    </a>
+                {% else %}
+                    <a class="button" href="/login">
+                        Kirjaudu sisään
+                    </a>
+
+                    <a class="button" href="/register">
+                        Luo tunnus
+                    </a>
+                {% endif %}
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</div>
+
+</body>
+</html>
