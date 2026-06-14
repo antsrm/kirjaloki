@@ -31,17 +31,38 @@ def register():
     username = request.form["username"]
     password = request.form["password"]
 
+    if not username.strip():
+        return render_template(
+            "register.html",
+            error="Käyttäjätunnus ei voi olla tyhjä"
+        )
+
+    if not password.strip():
+        return render_template(
+            "register.html",
+            error="Salasana ei voi olla tyhjä"
+        )
+
     if users.get_user_by_username(username):
-        return "Käyttäjätunnus on jo käytössä"
+        return render_template(
+            "register.html",
+            error="Käyttäjätunnus on jo käytössä",
+            username=username
+        )
 
     users.create_user(username, password)
 
-    return redirect("/login")
+    return redirect("/login?registered=1")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
+        registered = request.args.get("registered")
+
+        return render_template(
+            "login.html",
+            registered=registered
+        )
 
     check_csrf()
 
@@ -118,6 +139,42 @@ def new_review():
         "review": review
     }
 
+    if not title.strip():
+        return render_template(
+            "new_review.html",
+            genres=all_genres,
+            error="Kirjan nimi ei voi olla tyhjä",
+            form_data=form_data,
+            selected_genre_ids=selected_genre_ids
+        )
+
+    if not author.strip():
+        return render_template(
+            "new_review.html",
+            genres=all_genres,
+            error="Kirjailija ei voi olla tyhjä",
+            form_data=form_data,
+            selected_genre_ids=selected_genre_ids
+        )
+
+    if not rating.strip():
+        return render_template(
+            "new_review.html",
+            genres=all_genres,
+            error="Arvosana ei voi olla tyhjä",
+            form_data=form_data,
+            selected_genre_ids=selected_genre_ids
+        )
+
+    if not review.strip():
+        return render_template(
+            "new_review.html",
+            genres=all_genres,
+            error="Arvio ei voi olla tyhjä",
+            form_data=form_data,
+            selected_genre_ids=selected_genre_ids
+        )
+
     if len(genre_ids) > 3:
         return render_template(
             "new_review.html",
@@ -128,10 +185,10 @@ def new_review():
         )
 
     review_id = reviews.add_review(
-        title,
-        author,
+        title.strip(),
+        author.strip(),
         rating,
-        review,
+        review.strip(),
         session["user_id"]
     )
 
@@ -266,7 +323,7 @@ def add_comment(review_id):
 
     comment = request.form["comment"]
 
-    if comment.strip() == "":
+    if not comment.strip():
         return redirect("/review/" + str(review_id))
 
     comments.add_comment(review_id, session["user_id"], comment)

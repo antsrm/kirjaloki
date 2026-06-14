@@ -4,6 +4,12 @@
 
 <h2>Kirjaudu sisään</h2>
 
+{% if registered %}
+<p class="success">
+    Tunnus luotu onnistuneesti. Voit nyt kirjautua sisään.
+</p>
+{% endif %}
+
 <form action="/login" method="post">
 
     <input type="hidden"

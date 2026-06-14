@@ -145,3 +145,9 @@ nav {
     width: 48px;
     height: 48px;
 }
+
+.success {
+    color: #008000;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
