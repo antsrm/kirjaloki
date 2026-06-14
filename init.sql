@@ -1,0 +1,9 @@
+INSERT INTO genres (name) VALUES ('Fantasia');
+INSERT INTO genres (name) VALUES ('Scifi');
+INSERT INTO genres (name) VALUES ('Rikos');
+INSERT INTO genres (name) VALUES ('Kauhu');
+INSERT INTO genres (name) VALUES ('Romaani');
+INSERT INTO genres (name) VALUES ('Tietokirjallisuus');
+INSERT INTO genres (name) VALUES ('Elämäkerta');
+INSERT INTO genres (name) VALUES ('Historia');
+INSERT INTO genres (name) VALUES ('Romantiikka');

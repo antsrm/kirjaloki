@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="review-card">
+    <h2>{{ review.title }}</h2>
+
+    <p>
+        <strong>Arvion kirjoittaja:</strong>
+        <a href="/user/{{ review.user_id }}">{{ review.username }}</a>
+    </p>
+
+    <p><strong>Kirjailija:</strong> {{ review.author }}</p>
+
+    <p><strong>Arvosana:</strong> {{ review.rating }}/5</p>
+
+    {% if review_genres %}
+        <p>
+            <strong>Genret:</strong>
+            {% for genre in review_genres %}
+                <span class="genre-badge">{{ genre.name }}</span>
+            {% endfor %}
+        </p>
+    {% endif %}
+
+    <p>{{ review.review }}</p>
+
+    {% if session.user_id == review.user_id %}
+    <div class="actions">
+        <a class="button" href="/edit_review/{{ review.id }}">Muokkaa</a>
+
+        <form action="/delete_review/{{ review.id }}" method="post">
+
+            <input type="hidden"
+                   name="csrf_token"
+                   value="{{ session.csrf_token }}">
+
+            <input class="button danger" type="submit" value="Poista">
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+<h3>Kommentit</h3>
+
+{% for comment in comments %}
+<div class="comment-card">
+    <p>
+        <strong>
+            <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>
+        </strong>
+    </p>
+
+    <p>{{ comment.comment }}</p>
+
+    {% if session.user_id == comment.user_id %}
+    <form action="/delete_comment/{{ comment.id }}" method="post">
+
+        <input type="hidden"
+               name="csrf_token"
+               value="{{ session.csrf_token }}">
+
+        <input class="button danger" type="submit" value="Poista kommentti">
+    </form>
+    {% endif %}
+</div>
+{% endfor %}
+
+{% if comments|length == 0 %}
+<p>Ei kommentteja.</p>
+{% endif %}
+
+{% if session.user_id %}
+<h3>Lisää kommentti</h3>
+
+<form action="/add_comment/{{ review.id }}" method="post">
+
+    <input type="hidden"
+           name="csrf_token"
+           value="{{ session.csrf_token }}">
+
+    <p>
+        <textarea name="comment" rows="4" cols="50"></textarea>
+    </p>
+
+    <input class="button" type="submit" value="Lähetä kommentti">
+</form>
+
+{% else %}
+
+<p>
+    <a href="/login">Kirjaudu sisään</a> kommentoidaksesi.
+</p>
+
+{% endif %}
+
+<p>
+    <a class="button" href="/reviews">Takaisin arvioihin</a>
+</p>
+
+{% endblock %}

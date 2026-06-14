@@ -5,6 +5,11 @@
 <h2>Luo tunnus</h2>
 
 <form action="/register" method="post">
+    
+    <input type="hidden"
+           name="csrf_token"
+           value="{{ session.csrf_token }}">
+    
     <p>
         Käyttäjätunnus:<br>
         <input type="text" name="username">

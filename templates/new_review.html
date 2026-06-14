@@ -4,28 +4,54 @@
 
 <h2>Uusi kirja-arvio</h2>
 
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
 <form action="/new_review" method="post">
+
+    <input type="hidden"
+           name="csrf_token"
+           value="{{ session.csrf_token }}">
+
     <p>
         Kirjan nimi:<br>
-        <input type="text" name="title">
+        <input type="text" name="title" value="{{ form_data.title }}">
     </p>
 
     <p>
         Kirjailija:<br>
-        <input type="text" name="author">
+        <input type="text" name="author" value="{{ form_data.author }}">
     </p>
 
     <p>
         Arvosana:<br>
-        <input type="number" name="rating" min="1" max="5">
+        <input type="number" name="rating" min="1" max="5" value="{{ form_data.rating }}">
     </p>
 
     <p>
         Arvio:<br>
-        <textarea name="review" rows="5" cols="40"></textarea>
+        <textarea name="review" rows="5" cols="40">{{ form_data.review }}</textarea>
     </p>
 
-    <input type="submit" value="Lisää arvio">
+    <p>
+        Genret, valitse enintään 3:<br>
+
+        {% for genre in genres %}
+            <label>
+                <input
+                    type="checkbox"
+                    name="genres"
+                    value="{{ genre.id }}"
+                    {% if genre.id in selected_genre_ids %}checked{% endif %}
+                >
+                {{ genre.name }}
+            </label>
+            <br>
+        {% endfor %}
+    </p>
+
+    <input class="button" type="submit" value="Lisää arvio">
 </form>
 
 {% endblock %}

@@ -14,6 +14,10 @@ def get_user_by_username(username):
     sql = "SELECT * FROM users WHERE username = ?"
     return db.query_one(sql, (username,))
 
+def get_user(user_id):
+    sql = "SELECT * FROM users WHERE id = ?"
+    return db.query_one(sql, (user_id,))
+
 def check_login(username, password):
     user = get_user_by_username(username)
 
