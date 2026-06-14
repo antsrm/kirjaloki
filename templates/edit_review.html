@@ -4,7 +4,16 @@
 
 <h2>Muokkaa kirja-arviota</h2>
 
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
 <form action="/edit_review/{{ review.id }}" method="post">
+
+    <input type="hidden"
+           name="csrf_token"
+           value="{{ session.csrf_token }}">
+
     <p>
         Kirjan nimi:<br>
         <input type="text" name="title" value="{{ review.title }}">
@@ -25,7 +34,24 @@
         <textarea name="review" rows="5" cols="40">{{ review.review }}</textarea>
     </p>
 
-    <input type="submit" value="Tallenna muutokset">
+    <p>
+        Genret, valitse enintään 3:<br>
+
+        {% for genre in genres %}
+            <label>
+                <input
+                    type="checkbox"
+                    name="genres"
+                    value="{{ genre.id }}"
+                    {% if genre.id in selected_genre_ids %}checked{% endif %}
+                >
+                {{ genre.name }}
+            </label>
+            <br>
+        {% endfor %}
+    </p>
+
+    <input class="button" type="submit" value="Tallenna muutokset">
 </form>
 
 {% endblock %}

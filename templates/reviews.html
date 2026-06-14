@@ -8,32 +8,83 @@
     <a class="button" href="/new_review">Lisää uusi arvio</a>
 </p>
 
+<form action="/reviews" method="get">
+    <p>
+        Suodata genren mukaan:<br>
+
+        <select name="genre_id">
+            <option value="">Kaikki genret</option>
+
+            {% for genre in genres %}
+                <option
+                    value="{{ genre.id }}"
+                    {% if selected_genre_id == genre.id|string %}selected{% endif %}
+                >
+                    {{ genre.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <input class="button" type="submit" value="Suodata">
+        <a class="button" href="/reviews">Tyhjennä suodatus</a>
+    </p>
+</form>
+
 {% for review in reviews %}
 
 <div class="review-card">
+
     <h3>{{ review.title }}</h3>
 
     <p><strong>Kirjailija:</strong> {{ review.author }}</p>
 
-    <p><strong>Arvion kirjoittaja:</strong> {{ review.username }}</p>
+    {% if review_genres[review.id] %}
+        <p>
+            <strong>Genret:</strong>
+            {% for genre in review_genres[review.id] %}
+                <span class="genre-badge">{{ genre.name }}</span>
+            {% endfor %}
+        </p>
+    {% endif %}
+
+    <p>
+        <strong>Arvion kirjoittaja:</strong>
+        <a href="/user/{{ review.user_id }}">{{ review.username }}</a>
+    </p>
 
     <p><strong>Arvosana:</strong> {{ review.rating }}/5</p>
 
-    <p>{{ review.review }}</p>
+    <p>
+        {{ review.review[:250] }}
+        {% if review.review|length > 250 %}
+            ...
+        {% endif %}
+    </p>
+
+    <p>
+        <a class="button" href="/review/{{ review.id }}">Lue arvio</a>
+    </p>
 
     {% if session.user_id == review.user_id %}
-
     <div class="actions">
         <a class="button" href="/edit_review/{{ review.id }}">Muokkaa</a>
 
         <form action="/delete_review/{{ review.id }}" method="post">
+
+            <input type="hidden"
+                   name="csrf_token"
+                   value="{{ session.csrf_token }}">
+
             <input class="button danger" type="submit" value="Poista">
         </form>
     </div>
-
     {% endif %}
 </div>
 
 {% endfor %}
+
+{% if reviews|length == 0 %}
+<p>Ei kirja-arvioita.</p>
+{% endif %}
 
 {% endblock %}

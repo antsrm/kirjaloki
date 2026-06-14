@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>Käyttäjä: {{ user.username }}</h2>
+
+<div class="review-card">
+    <p><strong>Tili luotu:</strong> {{ user.created_at[:10] }}</p>
+    <p><strong>Kirja-arvioita:</strong> {{ review_count }}</p>
+
+    {% if average_rating %}
+        <p><strong>Arvioiden keskiarvo:</strong> {{ "%.1f"|format(average_rating) }}/5</p>
+    {% else %}
+        <p><strong>Arvioiden keskiarvo:</strong> ei arvioita</p>
+    {% endif %}
+</div>
+
+<h3>Käyttäjän lisäämät arviot</h3>
+
+{% for review in reviews %}
+
+<div class="review-card">
+    <h3>{{ review.title }}</h3>
+
+    <p><strong>Kirjailija:</strong> {{ review.author }}</p>
+    <p><strong>Arvosana:</strong> {{ review.rating }}/5</p>
+
+    <p>
+        {{ review.review.split()[:35] | join(' ') }}
+        {% if review.review.split()|length > 35 %}
+            ...
+        {% endif %}
+    </p>
+
+    <p>
+        <a class="button" href="/review/{{ review.id }}">Lue arvio</a>
+    </p>
+</div>
+
+{% endfor %}
+
+{% if reviews|length == 0 %}
+<p>Käyttäjä ei ole vielä lisännyt kirja-arvioita.</p>
+{% endif %}
+
+{% endblock %}
