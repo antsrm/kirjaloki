@@ -4,6 +4,10 @@
 
 <h2>Luo tunnus</h2>
 
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
 <form action="/register" method="post">
     
     <input type="hidden"
@@ -12,7 +16,7 @@
     
     <p>
         Käyttäjätunnus:<br>
-        <input type="text" name="username">
+        <input type="text" name="username" value="{{ username }}">
     </p>
 
     <p>
