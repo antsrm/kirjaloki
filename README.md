@@ -96,7 +96,7 @@ Sovelluksessa on seuraavat taulut:
 
 Tietokantatiedosto `database.db` luodaan paikallisesti eikä sitä tallenneta repositorioon.
 
-Sovelluksen testaaja voi luoda oman tietokantansa suorittamalla komennon:
+Sovelluksen käyttöönoton yhteydessä tietokanta tulee luoda suorittamalla komento:
 
 ```bash
 python init_db.py
