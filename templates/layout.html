@@ -35,6 +35,10 @@
                         Kirjautunut: {{ session.username }}
                     </span>
 
+                    <a class="button" href="/user/{{ session.user_id }}">
+                        Oma profiili
+                    </a>
+
                     <a class="button" href="/logout">
                         Kirjaudu ulos
                     </a>
