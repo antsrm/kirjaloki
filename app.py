@@ -61,7 +61,8 @@ def login():
 
         return render_template(
             "login.html",
-            registered=registered
+            registered=registered,
+            error=None
         )
 
     check_csrf()
@@ -72,7 +73,11 @@ def login():
     user = users.check_login(username, password)
 
     if not user:
-        return "Väärä tunnus tai salasana"
+        return render_template(
+            "login.html",
+            registered=None,
+            error="Väärä tunnus tai salasana"
+        )
 
     session["user_id"] = user["id"]
     session["username"] = user["username"]
