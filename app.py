@@ -175,11 +175,11 @@ def new_review():
             selected_genre_ids=selected_genre_ids
         )
 
-    if len(genre_ids) > 3:
+    if len(genre_ids) > 5:
         return render_template(
             "new_review.html",
             genres=all_genres,
-            error="Voit valita enintään 3 genreä",
+            error="Voit valita enintään 5 genreä",
             form_data=form_data,
             selected_genre_ids=selected_genre_ids
         )
@@ -228,7 +228,7 @@ def edit_review(review_id):
     genre_ids = list(dict.fromkeys(request.form.getlist("genres")))
     selected_genre_ids = [int(genre_id) for genre_id in genre_ids]
 
-    if len(genre_ids) > 3:
+    if len(genre_ids) > 5:
         edited_review = {
             "id": review_id,
             "title": title,
@@ -243,7 +243,7 @@ def edit_review(review_id):
             review=edited_review,
             genres=all_genres,
             selected_genre_ids=selected_genre_ids,
-            error="Voit valita enintään 3 genreä"
+            error="Voit valita enintään 5 genreä"
         )
 
     reviews.update_review(review_id, title, author, rating, review_text)
