@@ -10,23 +10,68 @@
         <input type="text" name="query" value="{{ query }}">
     </p>
 
-    <input type="submit" value="Hae">
+    <input class="button" type="submit" value="Hae">
 </form>
 
 {% if query %}
-<h3>Hakutulokset hakusanalla "{{ query }}"</h3>
 
-{% for review in results %}
-<h4>{{ review.title }}</h4>
-<p>Kirjailija: {{ review.author }}</p>
-<p>Arvosana: {{ review.rating }}/5</p>
-<p>{{ review.review }}</p>
-<hr>
+<h3>Kirja-arviot</h3>
+
+{% for review in reviews %}
+<div class="review-card">
+    <h3>{{ review.title }}</h3>
+
+    <p><strong>Kirjailija:</strong> {{ review.author }}</p>
+
+    {% if review_genres[review.id] %}
+        <p>
+            <strong>Genret:</strong>
+            {% for genre in review_genres[review.id] %}
+                <span class="genre-badge">{{ genre.name }}</span>
+            {% endfor %}
+        </p>
+    {% endif %}
+
+    <p>
+        <strong>Arvion kirjoittaja:</strong>
+        <a href="/user/{{ review.user_id }}">{{ review.username }}</a>
+    </p>
+
+    <p><strong>Arvosana:</strong> {{ review.rating }}/5</p>
+
+    <p>
+        {{ review.review[:250] }}
+        {% if review.review|length > 250 %}
+            ...
+        {% endif %}
+    </p>
+
+    <p>
+        <a class="button" href="/review/{{ review.id }}">Lue arvio</a>
+    </p>
+</div>
 {% endfor %}
 
-{% if results|length == 0 %}
-<p>Ei hakutuloksia.</p>
+{% if reviews|length == 0 %}
+<p>Ei kirja-arvioita.</p>
 {% endif %}
+
+<h3>Käyttäjät</h3>
+
+{% for user in users %}
+<div class="review-card">
+    <h3>{{ user.username }}</h3>
+
+    <p>
+        <a class="button" href="/user/{{ user.id }}">Näytä käyttäjäsivu</a>
+    </p>
+</div>
+{% endfor %}
+
+{% if users|length == 0 %}
+<p>Ei käyttäjiä.</p>
+{% endif %}
+
 {% endif %}
 
 {% endblock %}
