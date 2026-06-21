@@ -276,12 +276,24 @@ def delete_review(review_id):
 @app.route("/search")
 def search():
     query = request.args.get("query", "")
-    results = []
+    review_results = []
+    user_results = []
+    review_genres = {}
 
     if query:
-        results = reviews.search_reviews(query)
+        review_results = reviews.search_reviews(query)
+        user_results = users.search_users(query)
 
-    return render_template("search.html", query=query, results=results)
+        for review in review_results:
+            review_genres[review["id"]] = genres.get_review_genre_names(review["id"])
+
+    return render_template(
+        "search.html",
+        query=query,
+        reviews=review_results,
+        users=user_results,
+        review_genres=review_genres
+    )
 
 @app.route("/review/<int:review_id>")
 def review_page(review_id):

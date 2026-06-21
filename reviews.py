@@ -57,10 +57,13 @@ def delete_review(review_id):
 
 def search_reviews(query):
     sql = """
-        SELECT *
+        SELECT reviews.*, users.username
         FROM reviews
-        WHERE title LIKE ? OR author LIKE ? OR review LIKE ?
-        ORDER BY id DESC
+        JOIN users ON reviews.user_id = users.id
+        WHERE reviews.title LIKE ?
+           OR reviews.author LIKE ?
+           OR reviews.review LIKE ?
+        ORDER BY reviews.id DESC
     """
     like_query = "%" + query + "%"
     return db.query(sql, (like_query, like_query, like_query))

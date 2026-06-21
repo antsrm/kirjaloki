@@ -28,3 +28,13 @@ def check_login(username, password):
         return None
 
     return user
+
+def search_users(query):
+    sql = """
+        SELECT *
+        FROM users
+        WHERE username LIKE ?
+        ORDER BY username
+    """
+    like_query = "%" + query + "%"
+    return db.query(sql, (like_query,))
