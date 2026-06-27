@@ -56,8 +56,9 @@
     {% endif %}
 
     <p>
-        <strong>Arvion kirjoittaja:</strong>
-        <a href="/user/{{ review.user_id }}">{{ review.username }}</a>
+    <strong>Arvion kirjoittaja:</strong>
+    <a href="/user/{{ review.user_id }}">{{ review.username }}</a>
+    <span class="timestamp">• {{ review.created_at }}</span>
     </p>
 
     <p><strong>Arvosana:</strong> {{ review.rating }}/5</p>

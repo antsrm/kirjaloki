@@ -163,7 +163,7 @@ nav {
 }
 
 .hero-image:last-child {
-    width: 220px;
+    width: 230px;
     animation: moveOutRight 1s ease-out 0.2s;
     animation-fill-mode: both;
 }
@@ -191,6 +191,12 @@ nav {
     color: lightslategray;
     animation: fadeIn 1s ease-out 1.2s;
     animation-fill-mode: both;
+}
+
+.timestamp {
+    color: #999;
+    font-size: 0.9rem;
+    margin-left: 8px;
 }
 
 @keyframes slideDown {

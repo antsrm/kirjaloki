@@ -11,7 +11,8 @@ CREATE TABLE reviews (
     author TEXT,
     rating INTEGER,
     review TEXT,
-    user_id INTEGER REFERENCES users(id)
+    user_id INTEGER REFERENCES users(id),
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE genres (

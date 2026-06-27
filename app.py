@@ -4,6 +4,7 @@ import reviews
 import users
 import genres
 import comments
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -16,6 +17,11 @@ def ensure_csrf_token():
 def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
+
+def format_timestamp(timestamp):
+    dt = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+    dt = dt + timedelta(hours=3)
+    return dt.strftime("%d.%m.%Y %H:%M")
 
 @app.route("/")
 def index():
@@ -99,14 +105,19 @@ def show_reviews():
     else:
         all_reviews = reviews.get_reviews()
 
+    formatted_reviews = []
     review_genres = {}
 
     for review in all_reviews:
+        review = dict(review)
+        review["created_at"] = format_timestamp(review["created_at"])
+
+        formatted_reviews.append(review)
         review_genres[review["id"]] = genres.get_review_genre_names(review["id"])
 
     return render_template(
         "reviews.html",
-        reviews=all_reviews,
+        reviews=formatted_reviews,
         genres=all_genres,
         selected_genre_id=genre_id,
         review_genres=review_genres
@@ -311,20 +322,30 @@ def search():
     )
 
 @app.route("/review/<int:review_id>")
-def review_page(review_id):
+def show_review(review_id):
     review = reviews.get_review(review_id)
 
     if not review:
         return "Arviota ei löytynyt"
 
+    review = dict(review)
+    review["created_at"] = format_timestamp(review["created_at"])
+
     review_genres = genres.get_review_genre_names(review_id)
+
     review_comments = comments.get_comments(review_id)
+    formatted_comments = []
+
+    for comment in review_comments:
+        comment = dict(comment)
+        comment["created_at"] = format_timestamp(comment["created_at"])
+        formatted_comments.append(comment)
 
     return render_template(
         "review.html",
         review=review,
         review_genres=review_genres,
-        comments=review_comments
+        comments=formatted_comments
     )
 
 @app.route("/user/<int:user_id>")
