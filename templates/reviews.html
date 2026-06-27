@@ -69,14 +69,7 @@
     <div class="actions">
         <a class="button" href="/edit_review/{{ review.id }}">Muokkaa</a>
 
-        <form action="/delete_review/{{ review.id }}" method="post">
-
-            <input type="hidden"
-                   name="csrf_token"
-                   value="{{ session.csrf_token }}">
-
-            <input class="button danger" type="submit" value="Poista">
-        </form>
+        <a class="button danger" href="/delete_review/{{ review.id }}">Poista</a>
     </div>
     {% endif %}
 </div>
