@@ -2,37 +2,50 @@
 
 {% block content %}
 
-<h2>Kirjaudu sisään</h2>
+<div class="auth-box">
 
-{% if registered %}
-<p class="success">
-    Tunnus luotu onnistuneesti. Voit nyt kirjautua sisään.
-</p>
-{% endif %}
+    <img src="/static/books_4.png" alt="" class="auth-icon">
 
-{% if error %}
-<p class="error">
-    {{ error }}
-</p>
-{% endif %}
+    <h2>Kirjaudu sisään</h2>
 
-<form action="/login" method="post">
+    {% if registered %}
+    <p class="success">
+        Käyttäjä luotu onnistuneesti. Voit nyt kirjautua sisään.
+    </p>
+    {% endif %}
 
-    <input type="hidden"
-           name="csrf_token"
-           value="{{ session.csrf_token }}">
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
 
-    <p>
-        Käyttäjätunnus:<br>
-        <input type="text" name="username">
+    <form action="/login" method="post">
+
+        <input type="hidden"
+               name="csrf_token"
+               value="{{ session.csrf_token }}">
+
+        <p>
+            Käyttäjätunnus:<br>
+            <input type="text" name="username">
+        </p>
+
+        <p>
+            Salasana:<br>
+            <input type="password" name="password">
+        </p>
+
+        <button class="button" type="submit">
+            <img src="/static/icons/login.svg" alt="" class="button-icon">
+            Kirjaudu sisään
+        </button>
+
+    </form>
+
+    <p class="auth-link">
+    Eikö sinulla ole vielä tunnusta?
+    <a href="/register">Luo tunnus</a>
     </p>
 
-    <p>
-        Salasana:<br>
-        <input type="password" name="password">
-    </p>
-
-    <input type="submit" value="Kirjaudu">
-</form>
+</div>
 
 {% endblock %}

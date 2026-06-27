@@ -2,41 +2,41 @@
 
 {% block content %}
 
-<h2>Kirja-arviot</h2>
+<div class="form-box">
 
-<p>
-    <a class="button" href="/new_review">
-        <img src="/static/icons/add.svg" alt="" class="button-icon">
-        Lisää uusi arvio</a>
-</p>
+    <h2>Kirja-arviot</h2>
 
-<form action="/reviews" method="get">
     <p>
-        Suodata genren mukaan:<br>
-
-        <select name="genre_id">
-            <option value="">Kaikki genret</option>
-
-            {% for genre in genres %}
-                <option
-                    value="{{ genre.id }}"
-                    {% if selected_genre_id == genre.id|string %}selected{% endif %}
-                >
-                    {{ genre.name }}
-                </option>
-            {% endfor %}
-        </select>
-
-        <button class="button" type="submit">
-        <img src="/static/icons/filter.svg" alt="" class="button-icon">
-        Suodata
-        </button>
-        
-        <a class="button" href="/reviews">
-            <img src="/static/icons/delete.svg" alt="" class="button-icon">
-            Tyhjennä suodatus</a>
+        <a class="button" href="/new_review">
+            <img src="/static/icons/add.svg" alt="" class="button-icon">
+            Lisää uusi arvio
+        </a>
     </p>
-</form>
+
+    <form action="/reviews" method="get">
+        <p>
+            Suodata genren mukaan:<br>
+
+            <select name="genre_id" class="genre-select">
+                <option value="">Kaikki genret</option>
+
+                {% for genre in genres %}
+                    <option
+                        value="{{ genre.id }}"
+                        {% if selected_genre_id == genre.id|string %}selected{% endif %}
+                    >
+                        {{ genre.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button class="button" type="submit"><img src="/static/icons/filter.svg" alt="" class="button-icon"> Suodata</button>
+
+            <a class="button" href="/reviews"><img src="/static/icons/delete.svg" alt="" class="button-icon"> Tyhjennä suodatus</a>
+        </p>
+    </form>
+
+</div>
 
 {% for review in reviews %}
 

@@ -2,40 +2,51 @@
 
 {% block content %}
 
-<h2>Luo tunnus</h2>
+<div class="auth-box">
 
-{% if error %}
-<p class="error">{{ error }}</p>
-{% endif %}
+    <img src="/static/books_3.png" alt="" class="auth-icon">
 
-<form action="/register" method="post">
-    
-    <input type="hidden"
-           name="csrf_token"
-           value="{{ session.csrf_token }}">
-    
-    <p>
-        Käyttäjätunnus:<br>
-        <input type="text" name="username" value="{{ username }}">
+    <h2>Luo tunnus</h2>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form action="/register" method="post">
+
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+        <p>
+            Käyttäjätunnus:<br>
+            <input type="text" name="username" value="{{ username }}">
+        </p>
+
+        <p>
+            Salasana:<br>
+            <input type="password" name="password">
+        </p>
+
+        <p>
+            Salasana uudelleen:<br>
+            <input type="password" name="password2">
+        </p>
+
+        <p class="password-hint">
+           * Salasanan tulee olla vähintään 8 merkkiä pitkä eikä se saa olla liian yleinen tai sama kuin käyttäjätunnus.
+        </p>
+
+        <button class="button" type="submit">
+            <img src="/static/icons/register.svg" alt="" class="button-icon">
+            Luo tunnus
+        </button>
+
+    </form>
+
+    <p class="auth-link">
+    Onko sinulla jo tunnus?
+    <a href="/login">Kirjaudu sisään</a>
     </p>
 
-    <p>
-        Salasana:<br>
-        <input type="password" name="password">
-    </p>
-
-    <p>
-        Salasana uudelleen:<br>
-        <input type="password" name="password2">
-    </p>
-
-    <p class="password-hint">
-    * Salasanan tulee olla vähintään 8 merkkiä pitkä 
-    <br>
-    eikä se saa olla liian yleinen tai sama kuin käyttäjätunnus.
-    </p>
-
-    <input type="submit" value="Luo tunnus">
-</form>
+</div>
 
 {% endblock %}

@@ -2,59 +2,64 @@
 
 {% block content %}
 
-<h2>Uusi kirja-arvio</h2>
+<div class="form-box">
 
-{% if error %}
-<p class="error">{{ error }}</p>
-{% endif %}
+    <h2>Uusi kirja-arvio</h2>
 
-<form action="/new_review" method="post">
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
 
-    <input type="hidden"
-           name="csrf_token"
-           value="{{ session.csrf_token }}">
+    <form action="/new_review" method="post">
 
-    <p>
-        Kirjan nimi:<br>
-        <input type="text" name="title" value="{{ form_data.title }}">
-    </p>
+        <input type="hidden"
+               name="csrf_token"
+               value="{{ session.csrf_token }}">
 
-    <p>
-        Kirjailija:<br>
-        <input type="text" name="author" value="{{ form_data.author }}">
-    </p>
+        <p>
+            Kirjan nimi:<br>
+            <input type="text" name="title" value="{{ form_data.title }}">
+        </p>
 
-    <p>
-        Arvosana:<br>
-        <input type="number" name="rating" min="1" max="5" value="{{ form_data.rating }}">
-    </p>
+        <p>
+            Kirjailija:<br>
+            <input type="text" name="author" value="{{ form_data.author }}">
+        </p>
 
-    <p>
-        Arvio:<br>
-        <textarea name="review" rows="5" cols="40">{{ form_data.review }}</textarea>
-    </p>
+        <p>
+            Arvosana (1-5):<br>
+            <input type="number" name="rating" min="1" max="5" value="{{ form_data.rating }}">
+        </p>
 
-    <p>
-        Genret, valitse enintään 5:<br>
+        <p>
+            Arvio:<br>
+            <textarea name="review" rows="5" cols="40">{{ form_data.review }}</textarea>
+        </p>
 
-        {% for genre in genres %}
-            <label>
-                <input
-                    type="checkbox"
-                    name="genres"
-                    value="{{ genre.id }}"
-                    {% if genre.id in selected_genre_ids %}checked{% endif %}
-                >
-                {{ genre.name }}
-            </label>
-            <br>
-        {% endfor %}
-    </p>
+        <p>
+            Genret, valitse enintään 5:<br>
 
-    <button class="button" type="submit">
-    <img src="/static/icons/check.svg" alt="" class="button-icon">
-    Lisää arvio
-</button>
-</form>
+            {% for genre in genres %}
+                <label>
+                    <input
+                        type="checkbox"
+                        name="genres"
+                        value="{{ genre.id }}"
+                        {% if genre.id in selected_genre_ids %}checked{% endif %}
+                    >
+                    {{ genre.name }}
+                </label>
+                <br>
+            {% endfor %}
+        </p>
+
+        <button class="button" type="submit">
+            <img src="/static/icons/check.svg" alt="" class="button-icon">
+            Lisää arvio
+        </button>
+
+    </form>
+
+</div>
 
 {% endblock %}
