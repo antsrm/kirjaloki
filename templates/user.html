@@ -43,4 +43,14 @@
 <p>Käyttäjä ei ole vielä lisännyt kirja-arvioita.</p>
 {% endif %}
 
+{% if session.user_id == user.id %}
+<hr>
+
+<p>
+    <a class="button danger" href="/delete_user/{{ user.id }}">
+        Poista käyttäjätili
+    </a>
+</p>
+{% endif %}
+
 {% endblock %}

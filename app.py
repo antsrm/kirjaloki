@@ -258,19 +258,34 @@ def edit_review(review_id):
 
     return redirect("/reviews")
 
-@app.route("/delete_review/<int:review_id>", methods=["POST"])
+@app.route("/delete_review/<int:review_id>", methods=["GET", "POST"])
 def delete_review(review_id):
     if "user_id" not in session:
         return redirect("/login")
 
-    check_csrf()
-
     review = reviews.get_review(review_id)
+
+    if not review:
+        return "Arviota ei löytynyt"
 
     if review["user_id"] != session["user_id"]:
         return "Ei oikeutta poistaa tätä arviota"
 
+    if request.method == "GET":
+        return render_template(
+            "confirm_delete.html",
+            title="Poista arvio",
+            message="Haluatko varmasti poistaa tämän arvion?",
+            item_name=review["title"],
+            action_url="/delete_review/" + str(review_id),
+            cancel_url="/review/" + str(review_id),
+            confirm_button="Poista arvio"
+        )
+
+    check_csrf()
+
     reviews.delete_review(review_id)
+
     return redirect("/reviews")
 
 @app.route("/search")
@@ -347,12 +362,10 @@ def add_comment(review_id):
 
     return redirect("/review/" + str(review_id))
 
-@app.route("/delete_comment/<int:comment_id>", methods=["POST"])
+@app.route("/delete_comment/<int:comment_id>", methods=["GET", "POST"])
 def delete_comment(comment_id):
     if "user_id" not in session:
         return redirect("/login")
-
-    check_csrf()
 
     comment = comments.get_comment(comment_id)
 
@@ -362,9 +375,60 @@ def delete_comment(comment_id):
     if comment["user_id"] != session["user_id"]:
         return "Ei oikeutta poistaa tätä kommenttia"
 
+    if request.method == "GET":
+        return render_template(
+            "confirm_delete.html",
+            title="Poista kommentti",
+            message="Haluatko varmasti poistaa tämän kommentin?",
+            item_name=comment["comment"][:80],
+            action_url="/delete_comment/" + str(comment_id),
+            cancel_url="/review/" + str(comment["review_id"]),
+            confirm_button="Poista kommentti"
+        )
+
+    check_csrf()
+
     comments.delete_comment(comment_id)
 
-    return redirect(request.referrer or "/reviews")
+    return redirect("/review/" + str(comment["review_id"]))
+
+@app.route("/delete_user/<int:user_id>", methods=["GET", "POST"])
+def delete_user(user_id):
+    if "user_id" not in session:
+        return redirect("/login")
+
+    if session["user_id"] != user_id:
+        return "Ei oikeutta poistaa tätä käyttäjää"
+
+    user = users.get_user(user_id)
+
+    if not user:
+        return "Käyttäjää ei löytynyt"
+
+    if request.method == "GET":
+        return render_template(
+            "confirm_delete.html",
+            title="Poista käyttäjätili",
+            message="Haluatko varmasti poistaa käyttäjätilisi? Tämä poistaa myös kaikki arviosi ja kommenttisi.",
+            item_name=user["username"],
+            action_url="/delete_user/" + str(user_id),
+            cancel_url="/user/" + str(user_id),
+            confirm_button="Poista käyttäjätili"
+        )
+
+    check_csrf()
+
+    user_reviews = reviews.get_reviews_by_user(user_id)
+
+    for review in user_reviews:
+        reviews.delete_review(review["id"])
+
+    comments.delete_comments_by_user(user_id)
+    users.delete_user(user_id)
+
+    session.clear()
+
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True)

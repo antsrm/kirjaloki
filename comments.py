@@ -31,3 +31,7 @@ def get_comment(comment_id):
         WHERE id = ?
     """
     return db.query_one(sql, (comment_id,))
+
+def delete_comments_by_user(user_id):
+    sql = "DELETE FROM comments WHERE user_id = ?"
+    db.execute(sql, (user_id,))

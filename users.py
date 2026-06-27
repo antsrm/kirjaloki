@@ -38,3 +38,7 @@ def search_users(query):
     """
     like_query = "%" + query + "%"
     return db.query(sql, (like_query,))
+
+def delete_user(user_id):
+    sql = "DELETE FROM users WHERE id = ?"
+    db.execute(sql, (user_id,))

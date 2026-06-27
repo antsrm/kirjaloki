@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<p>{{ message }}</p>
+
+{% if item_name %}
+<div class="review-card">
+    <h3>{{ item_name }}</h3>
+</div>
+{% endif %}
+
+<form action="{{ action_url }}" method="post">
+
+    <input type="hidden"
+           name="csrf_token"
+           value="{{ session.csrf_token }}">
+
+    <input class="button danger"
+           type="submit"
+           value="{{ confirm_button }}">
+
+    <a class="button" href="{{ cancel_url }}">
+        Peruuta
+    </a>
+
+</form>
+
+{% endblock %}

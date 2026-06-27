@@ -28,15 +28,7 @@
     {% if session.user_id == review.user_id %}
     <div class="actions">
         <a class="button" href="/edit_review/{{ review.id }}">Muokkaa</a>
-
-        <form action="/delete_review/{{ review.id }}" method="post">
-
-            <input type="hidden"
-                   name="csrf_token"
-                   value="{{ session.csrf_token }}">
-
-            <input class="button danger" type="submit" value="Poista">
-        </form>
+        <a class="button danger" href="/delete_review/{{ review.id }}">Poista</a>
     </div>
     {% endif %}
 </div>
@@ -54,14 +46,9 @@
     <p>{{ comment.comment }}</p>
 
     {% if session.user_id == comment.user_id %}
-    <form action="/delete_comment/{{ comment.id }}" method="post">
-
-        <input type="hidden"
-               name="csrf_token"
-               value="{{ session.csrf_token }}">
-
-        <input class="button danger" type="submit" value="Poista kommentti">
-    </form>
+    <a class="button danger" href="/delete_comment/{{ comment.id }}">
+        Poista kommentti
+    </a>
     {% endif %}
 </div>
 {% endfor %}
