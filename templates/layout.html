@@ -23,10 +23,25 @@
         <nav>
 
             <div class="nav-left">
-                <a class="button" href="/">Etusivu</a>
-                <a class="button" href="/reviews">Kirja-arviot</a>
-                <a class="button" href="/new_review">Uusi arvio</a>
-                <a class="button" href="/search">Haku</a>
+                <a class="button" href="/">
+                    <img src="/static/icons/home.svg" alt="" class="button-icon">
+                    Etusivu
+                </a>
+
+                <a class="button" href="/reviews">
+                    <img src="/static/icons/reviews.svg" alt="" class="button-icon">
+                    Kirja-arviot
+                </a>
+
+                <a class="button" href="/new_review">
+                    <img src="/static/icons/add.svg" alt="" class="button-icon">
+                    Uusi arvio
+                </a>
+
+                <a class="button" href="/search">
+                    <img src="/static/icons/search.svg" alt="" class="button-icon">
+                    Haku
+                </a>
             </div>
 
             <div class="nav-right">
@@ -36,18 +51,22 @@
                     </span>
 
                     <a class="button" href="/user/{{ session.user_id }}">
+                        <img src="/static/icons/profile.svg" alt="" class="button-icon">
                         Oma profiili
                     </a>
 
                     <a class="button" href="/logout">
+                        <img src="/static/icons/logout.svg" alt="" class="button-icon">
                         Kirjaudu ulos
                     </a>
                 {% else %}
                     <a class="button" href="/login">
+                        <img src="/static/icons/profile.svg" alt="" class="button-icon">
                         Kirjaudu sisään
                     </a>
 
                     <a class="button" href="/register">
+                        <img src="/static/icons/register.svg" alt="" class="button-icon">
                         Luo tunnus
                     </a>
                 {% endif %}

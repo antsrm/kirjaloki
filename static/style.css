@@ -6,7 +6,7 @@ body {
 }
 
 .page {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 24px;
 }
@@ -24,20 +24,26 @@ nav {
     align-items: center;
 }
 
-.nav-left {
-    display: flex;
-    gap: 8px;
-}
-
-.nav-right {
+.nav-left,
+.nav-right,
+.actions {
     display: flex;
     gap: 8px;
     align-items: center;
+}
+
+.nav-right {
     margin-left: auto;
 }
 
+.actions form {
+    margin: 0;
+}
+
 .button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 8px 14px;
     background: #3f51b5;
     color: white;
@@ -60,61 +66,36 @@ nav {
     background: #8f2f2f;
 }
 
+.button-icon {
+    width: 16px;
+    height: 16px;
+}
+
 .login-info {
     font-size: 0.95rem;
     color: #555;
 }
 
-.review-card {
+.review-card,
+.comment-card {
     background: white;
     border: 1px solid #ddd;
     border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.review-card {
     padding: 18px;
     margin: 16px 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.comment-card {
+    padding: 14px;
+    margin: 12px 0;
 }
 
 .review-card h3 {
     margin-top: 0;
-}
-
-.actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.actions form {
-    margin: 0;
-}
-
-.hero {
-    text-align: center;
-    margin-top: 60px;
-}
-
-.hero-image {
-    width: 100%;
-    max-width: 500px;
-    border-radius: 10px;
-    display: block;
-    margin: 20px auto;
-}
-
-.hero-text {
-    max-width: 700px;
-    margin: 0 auto;
-    font-size: 1.1rem;
-}
-
-.licence-text{
-    color:lightslategray
-}
-
-.error {
-    color: #cc0000;
-    font-weight: bold;
-    margin-bottom: 15px;
 }
 
 .genre-badge {
@@ -126,13 +107,16 @@ nav {
     font-size: 0.9rem;
 }
 
-.comment-card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 14px;
-    margin: 12px 0;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+.error {
+    color: #cc0000;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.success {
+    color: #008000;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .site-title {
@@ -146,14 +130,37 @@ nav {
     height: 48px;
 }
 
-.success {
-    color: #008000;
-    font-weight: bold;
-    margin-bottom: 15px;
+.hero {
+    text-align: center;
+    margin-top: 60px;
 }
 
 .hero h2 {
     animation: slideDown 0.8s ease-out;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    display: block;
+    margin: 20px auto;
+    animation: slideInRight 1s ease-out 0.2s;
+    animation-fill-mode: both;
+}
+
+.hero-text {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    animation: slideUp 1s ease-out 0.6s;
+    animation-fill-mode: both;
+}
+
+.licence-text {
+    color: lightslategray;
+    animation: fadeIn 1s ease-out 1.2s;
+    animation-fill-mode: both;
 }
 
 @keyframes slideDown {
@@ -168,11 +175,6 @@ nav {
     }
 }
 
-.hero-image {
-    animation: slideInRight 1s ease-out 0.2s;
-    animation-fill-mode: both;
-}
-
 @keyframes slideInRight {
     from {
         opacity: 0;
@@ -185,11 +187,6 @@ nav {
     }
 }
 
-.hero-text {
-    animation: slideUp 1s ease-out 0.6s;
-    animation-fill-mode: both;
-}
-
 @keyframes slideUp {
     from {
         opacity: 0;
@@ -200,13 +197,6 @@ nav {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.licence-text {
-    color: lightslategray;
-
-    animation: fadeIn 1s ease-out 1.2s;
-    animation-fill-mode: both;
 }
 
 @keyframes fadeIn {
