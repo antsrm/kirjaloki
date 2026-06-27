@@ -6,8 +6,9 @@
     <h2>{{ review.title }}</h2>
 
     <p>
-        <strong>Arvion kirjoittaja:</strong>
-        <a href="/user/{{ review.user_id }}">{{ review.username }}</a>
+    <strong>Arvion kirjoittaja:</strong>
+    <a href="/user/{{ review.user_id }}">{{ review.username }}</a>
+    <span class="timestamp">• {{ review.created_at }}</span>
     </p>
 
     <p><strong>Kirjailija:</strong> {{ review.author }}</p>
@@ -44,9 +45,13 @@
 {% for comment in comments %}
 <div class="comment-card">
     <p>
-        <strong>
-            <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>
-        </strong>
+    <strong>
+        <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>
+    </strong>
+
+    <span class="timestamp">
+        • {{ comment.created_at }}
+    </span>
     </p>
 
     <p>{{ comment.comment }}</p>
