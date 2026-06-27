@@ -87,11 +87,13 @@ nav {
 .review-card {
     padding: 18px;
     margin: 16px 0;
+    animation: cardSlideIn 0.6s ease-out;
 }
 
 .comment-card {
     padding: 14px;
     margin: 12px 0;
+    animation: cardSlideIn 0.6s ease-out;
 }
 
 .review-card h3 {
@@ -107,8 +109,13 @@ nav {
     font-size: 0.9rem;
 }
 
+.genre-select {
+    width: 260px !important;
+    margin-right: 10px;
+}
+
 .error {
-    color: #cc0000;
+    color: #e40b0b;
     font-weight: bold;
     margin-bottom: 15px;
 }
@@ -139,7 +146,7 @@ nav {
     text-align: center;
     width: 100%;
     font-size: 1.6rem;
-    margin: 0 auto 30px;
+    margin: 0 auto 20px;
     animation: slideDown 0.8s ease-out;
 }
 
@@ -181,7 +188,7 @@ nav {
 .hero-text {
     max-width: 700px;
     margin: 0 auto;
-    margin-top: 60px;
+    margin-top: 50px;
     font-size: 1rem;
     animation: slideUp 1s ease-out 0.6s;
     animation-fill-mode: both;
@@ -199,11 +206,79 @@ nav {
     margin-left: 8px;
 }
 
-.password-hint {
-    color: #777;
-    font-size: 0.7rem;
-    margin-top: -8px;
-    margin-bottom: 16px;
+.auth-box {
+    max-width: 420px;
+    margin: 70px auto 0;
+    padding: 32px;
+    background: #b8cbce;
+    color: rgb(0, 0, 0);
+    border-radius: 14px;
+    text-align: center;
+    animation: authAppear 0.6s ease-out;
+}
+
+.auth-box input {
+    width: 90%;
+    padding: 10px;
+    margin-top: 6px;
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.auth-box .password-hint {
+    color: #ffffff;
+    font-size: 0.85rem;
+    margin: 8px auto 18px;
+    max-width: 340px;
+}
+
+.auth-icon {
+    display: block;
+    width: 100px;
+    height: auto;
+    margin: 0 auto 16px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.form-box {
+    max-width: 720px;
+    margin-top: 50px;
+    padding: 32px;
+    background: #b8cbce;
+    color: rgb(0, 0, 0);
+    border-radius: 14px;
+    animation: authAppear 0.6s ease-out;
+}
+
+.form-box input[type="text"],
+.form-box input[type="number"],
+.form-box textarea,
+.form-box select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 6px;
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.form-box textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-box select {
+    margin-top: 6px;
+    margin-bottom: 14px;
+}
+
+.form-box .button {
+    margin-top: 8px;
+    margin-right: 8px;
 }
 
 @keyframes slideDown {
@@ -261,5 +336,29 @@ nav {
 
     to {
         opacity: 1;
+    }
+}
+
+@keyframes authAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }

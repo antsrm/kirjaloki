@@ -2,18 +2,20 @@
 
 {% block content %}
 
-<h2>Haku</h2>
+<div class="form-box">
 
-<form action="/search" method="get">
-    <p>
-        Hakusana:<br>
-        <input type="text" name="query" value="{{ query }}">
-    </p>
+    <h2>Haku</h2>
 
-    <button class="button" type="submit">
-        <img src="/static/icons/search.svg" alt="" class="button-icon"> 
-        Hae</button>
-</form>
+    <form action="/search" method="get">
+        <p>
+            Hakusana:<br>
+            <input type="text" name="query" value="{{ query }}">
+        </p>
+
+        <button class="button" type="submit"><img src="/static/icons/search.svg" alt="" class="button-icon"> Hae</button>
+    </form>
+
+</div>
 
 {% if query %}
 
@@ -49,9 +51,7 @@
     </p>
 
     <p>
-        <a class="button" href="/review/{{ review.id }}">
-            <img src="/static/icons/look.svg" alt="" class="button-icon">
-            Lue arvio</a>
+        <a class="button" href="/review/{{ review.id }}"><img src="/static/icons/look.svg" alt="" class="button-icon"> Lue arvio</a>
     </p>
 </div>
 {% endfor %}
@@ -67,7 +67,7 @@
     <h3>{{ user.username }}</h3>
 
     <p>
-        <a class="button" href="/user/{{ user.id }}">Näytä käyttäjäsivu</a>
+        <a class="button" href="/user/{{ user.id }}"><img src="/static/icons/profile.svg" alt="" class="button-icon"> Näytä käyttäjäsivu</a>
     </p>
 </div>
 {% endfor %}
