@@ -27,8 +27,14 @@
 
     {% if session.user_id == review.user_id %}
     <div class="actions">
-        <a class="button" href="/edit_review/{{ review.id }}">Muokkaa</a>
-        <a class="button danger" href="/delete_review/{{ review.id }}">Poista</a>
+        <a class="button" href="/edit_review/{{ review.id }}">
+            <img src="/static/icons/edit.svg" alt="" class="button-icon">
+            Muokkaa
+        </a>
+        <a class="button danger" href="/delete_review/{{ review.id }}">
+            <img src="/static/icons/delete.svg" alt="" class="button-icon">
+            Poista
+        </a>
     </div>
     {% endif %}
 </div>
@@ -47,6 +53,7 @@
 
     {% if session.user_id == comment.user_id %}
     <a class="button danger" href="/delete_comment/{{ comment.id }}">
+        <img src="/static/icons/delete.svg" alt="" class="button-icon">
         Poista kommentti
     </a>
     {% endif %}
@@ -70,7 +77,11 @@
         <textarea name="comment" rows="4" cols="50"></textarea>
     </p>
 
-    <input class="button" type="submit" value="Lähetä kommentti">
+    <button class="button" type="submit">
+        <img src="/static/icons/send.svg" alt="" class="button-icon"> 
+        Lähetä kommentti
+    </button>
+
 </form>
 
 {% else %}
@@ -82,7 +93,10 @@
 {% endif %}
 
 <p>
-    <a class="button" href="/reviews">Takaisin arvioihin</a>
+    <a class="button" href="/reviews">
+        <img src="/static/icons/return.svg" alt="" class="button-icon"> 
+        Takaisin arvioihin
+    </a>
 </p>
 
 {% endblock %}

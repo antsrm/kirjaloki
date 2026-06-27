@@ -5,7 +5,9 @@
 <h2>Kirja-arviot</h2>
 
 <p>
-    <a class="button" href="/new_review">Lisää uusi arvio</a>
+    <a class="button" href="/new_review">
+        <img src="/static/icons/add.svg" alt="" class="button-icon">
+        Lisää uusi arvio</a>
 </p>
 
 <form action="/reviews" method="get">
@@ -25,8 +27,14 @@
             {% endfor %}
         </select>
 
-        <input class="button" type="submit" value="Suodata">
-        <a class="button" href="/reviews">Tyhjennä suodatus</a>
+        <button class="button" type="submit">
+        <img src="/static/icons/filter.svg" alt="" class="button-icon">
+        Suodata
+        </button>
+        
+        <a class="button" href="/reviews">
+            <img src="/static/icons/delete.svg" alt="" class="button-icon">
+            Tyhjennä suodatus</a>
     </p>
 </form>
 
@@ -62,16 +70,40 @@
     </p>
 
     <p>
-        <a class="button" href="/review/{{ review.id }}">Lue arvio</a>
+        <a class="button" href="/review/{{ review.id }}">
+            <img
+                src="/static/icons/look.svg"
+                alt=""
+                class="button-icon"
+            >
+            Lue arvio
+        </a>
     </p>
 
     {% if session.user_id == review.user_id %}
     <div class="actions">
-        <a class="button" href="/edit_review/{{ review.id }}">Muokkaa</a>
 
-        <a class="button danger" href="/delete_review/{{ review.id }}">Poista</a>
+        <a class="button" href="/edit_review/{{ review.id }}">
+            <img
+                src="/static/icons/edit.svg"
+                alt=""
+                class="button-icon"
+            >
+            Muokkaa
+        </a>
+
+        <a class="button danger" href="/delete_review/{{ review.id }}">
+            <img
+                src="/static/icons/delete.svg"
+                alt=""
+                class="button-icon"
+            >
+            Poista
+        </a>
+
     </div>
     {% endif %}
+
 </div>
 
 {% endfor %}

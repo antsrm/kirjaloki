@@ -10,7 +10,9 @@
         <input type="text" name="query" value="{{ query }}">
     </p>
 
-    <input class="button" type="submit" value="Hae">
+    <button class="button" type="submit">
+        <img src="/static/icons/search.svg" alt="" class="button-icon"> 
+        Hae</button>
 </form>
 
 {% if query %}
@@ -47,7 +49,9 @@
     </p>
 
     <p>
-        <a class="button" href="/review/{{ review.id }}">Lue arvio</a>
+        <a class="button" href="/review/{{ review.id }}">
+            <img src="/static/icons/look.svg" alt="" class="button-icon">
+            Lue arvio</a>
     </p>
 </div>
 {% endfor %}
