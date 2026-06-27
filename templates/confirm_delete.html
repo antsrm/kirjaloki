@@ -18,11 +18,11 @@
            name="csrf_token"
            value="{{ session.csrf_token }}">
 
-    <input class="button danger"
-           type="submit"
-           value="{{ confirm_button }}">
+    <button class="button danger" type="submit">
+        <img src="/static/icons/delete.svg" alt="" class="button-icon"> {{ confirm_button }}</button>
 
     <a class="button" href="{{ cancel_url }}">
+        <img src="/static/icons/return.svg" alt="" class="button-icon">
         Peruuta
     </a>
 
