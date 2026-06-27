@@ -23,6 +23,27 @@ def format_timestamp(timestamp):
     dt = dt + timedelta(hours=3)
     return dt.strftime("%d.%m.%Y %H:%M")
 
+def validate_password(password, username):
+    common_passwords = [
+        "password",
+        "salasana",
+        "12345678",
+        "123456789",
+        "qwerty123",
+        "admin123"
+    ]
+
+    if len(password) < 8:
+        return "Salasanan pitää olla vähintään 8 merkkiä pitkä"
+
+    if password.lower() == username.lower():
+        return "Salasana ei voi olla sama kuin käyttäjätunnus"
+
+    if password.lower() in common_passwords:
+        return "Salasana on liian yleinen"
+
+    return None
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -36,6 +57,7 @@ def register():
 
     username = request.form["username"]
     password = request.form["password"]
+    password2 = request.form["password2"]
 
     if not username.strip():
         return render_template(
@@ -46,7 +68,24 @@ def register():
     if not password.strip():
         return render_template(
             "register.html",
-            error="Salasana ei voi olla tyhjä"
+            error="Salasana ei voi olla tyhjä",
+            username=username
+        )
+
+    if password != password2:
+        return render_template(
+            "register.html",
+            error="Salasanat eivät täsmää",
+            username=username
+        )
+
+    password_error = validate_password(password, username)
+
+    if password_error:
+        return render_template(
+            "register.html",
+            error=password_error,
+            username=username
         )
 
     if users.get_user_by_username(username):
@@ -56,7 +95,7 @@ def register():
             username=username
         )
 
-    users.create_user(username, password)
+    users.create_user(username.strip(), password)
 
     return redirect("/login?registered=1")
 

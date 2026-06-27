@@ -199,6 +199,13 @@ nav {
     margin-left: 8px;
 }
 
+.password-hint {
+    color: #777;
+    font-size: 0.7rem;
+    margin-top: -8px;
+    margin-bottom: 16px;
+}
+
 @keyframes slideDown {
     from {
         opacity: 0;
