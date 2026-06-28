@@ -82,9 +82,28 @@ nav {
     height: 16px;
 }
 
-.login-info {
-    font-size: 0.95rem;
-    color: #555;
+.nav-user {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.nav-user .login-info {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 0.9rem;
+    max-width: 260px;
+    word-break: break-word;
+    text-align: right;
+}
+
+.nav-user-buttons {
+    display: flex;
+    gap: 8px;
 }
 
 .review-card,
