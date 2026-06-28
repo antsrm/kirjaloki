@@ -18,7 +18,7 @@ Kirjaloki on sovellus, jossa käyttäjät voivat jakaa kirja-arvioitaan ja lukuk
 - Käyttäjä pystyy poistamaan omia kirja-arvioitaan.
 - Käyttäjä näkee kaikki sovellukseen lisätyt kirja-arviot.
 - Jokaisella kirja-arviolla on oma sivunsa.
-- Arvioihin voidaan liittää enintään kolme genreä.
+- Arvioihin voidaan liittää enintään viisi genreä.
 
 ### Genret ja haku
 
