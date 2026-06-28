@@ -11,6 +11,17 @@ body {
     padding: 24px;
 }
 
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.page-title-icon {
+    width: 50px;
+}
+
 header {
     margin-bottom: 40px;
 }
