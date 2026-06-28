@@ -75,7 +75,7 @@ Sovellusta voi testata seuraavasti:
 5. Tarkista, että arvio näkyy Kirja-arviot-sivulla.
 6. Avaa arvio sen omalle sivulle.
 7. Lisää arvioon kommentti.
-8. Muokkaa arvioa ja tarkista, että muutokset tallentuvat.
+8. Muokkaa arviota ja tarkista, että muutokset tallentuvat.
 9. Poista kommentti.
 10. Poista arvio.
 11. Testaa hakutoimintoa hakusanalla.
