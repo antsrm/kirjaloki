@@ -64,6 +64,24 @@ def register():
             "register.html",
             error="Käyttäjätunnus ei voi olla tyhjä"
         )
+    
+    if len(username.strip()) < 3:
+        return render_template(
+        "register.html",
+        error="Käyttäjätunnuksen tulee olla vähintään 3 merkkiä pitkä"
+    )
+
+    if len(username.strip()) > 25:
+        return render_template(
+        "register.html",
+        error="Käyttäjätunnus saa olla enintään 25 merkkiä pitkä"
+    )
+
+    if not username.replace("_", "").isalnum():
+        return render_template(
+        "register.html",
+        error="Käyttäjätunnuksessa saa olla vain kirjaimia, numeroita ja alaviivoja"
+    )
 
     if not password.strip():
         return render_template(
@@ -173,7 +191,7 @@ def new_review():
         return render_template(
             "new_review.html",
             genres=all_genres,
-            error=None,
+            errors=[],
             form_data={},
             selected_genre_ids=[]
         )
@@ -194,47 +212,41 @@ def new_review():
         "review": review
     }
 
+    errors = []
+
     if not title.strip():
-        return render_template(
-            "new_review.html",
-            genres=all_genres,
-            error="Kirjan nimi ei voi olla tyhjä",
-            form_data=form_data,
-            selected_genre_ids=selected_genre_ids
-        )
+        errors.append("Kirjan nimi ei voi olla tyhjä")
+    elif len(title.strip()) > 150:
+        errors.append("Kirjan nimi saa olla enintään 150 merkkiä pitkä")
 
     if not author.strip():
-        return render_template(
-            "new_review.html",
-            genres=all_genres,
-            error="Kirjailija ei voi olla tyhjä",
-            form_data=form_data,
-            selected_genre_ids=selected_genre_ids
-        )
+        errors.append("Kirjailija ei voi olla tyhjä")
+    else:
+        if len(author.strip()) < 2:
+            errors.append("Kirjailijan nimen tulee olla vähintään 2 merkkiä pitkä")
+
+        if len(author.strip()) > 100:
+            errors.append("Kirjailijan nimi saa olla enintään 100 merkkiä pitkä")
+
+        if not any(char.isalpha() for char in author):
+            errors.append("Kirjailijan nimessä tulee olla vähintään yksi kirjain")
 
     if not rating.strip():
-        return render_template(
-            "new_review.html",
-            genres=all_genres,
-            error="Arvosana ei voi olla tyhjä",
-            form_data=form_data,
-            selected_genre_ids=selected_genre_ids
-        )
+        errors.append("Arvosana ei voi olla tyhjä")
 
     if not review.strip():
-        return render_template(
-            "new_review.html",
-            genres=all_genres,
-            error="Arvio ei voi olla tyhjä",
-            form_data=form_data,
-            selected_genre_ids=selected_genre_ids
-        )
+        errors.append("Arvio ei voi olla tyhjä")
 
-    if len(genre_ids) > 5:
+    if not genre_ids:
+        errors.append("Valitse vähintään yksi genre")
+    elif len(genre_ids) > 5:
+        errors.append("Voit valita enintään 5 genreä")
+
+    if errors:
         return render_template(
             "new_review.html",
             genres=all_genres,
-            error="Voit valita enintään 5 genreä",
+            errors=errors,
             form_data=form_data,
             selected_genre_ids=selected_genre_ids
         )
@@ -251,12 +263,16 @@ def new_review():
 
     return redirect("/reviews")
 
+
 @app.route("/edit_review/<int:review_id>", methods=["GET", "POST"])
 def edit_review(review_id):
     if "user_id" not in session:
         return redirect("/login")
 
     review = reviews.get_review(review_id)
+
+    if not review:
+        return "Arviota ei löytynyt"
 
     if review["user_id"] != session["user_id"]:
         return "Ei oikeutta muokata tätä arviota"
@@ -271,7 +287,7 @@ def edit_review(review_id):
             review=review,
             genres=all_genres,
             selected_genre_ids=selected_genre_ids,
-            error=None
+            errors=[]
         )
 
     check_csrf()
@@ -283,25 +299,61 @@ def edit_review(review_id):
     genre_ids = list(dict.fromkeys(request.form.getlist("genres")))
     selected_genre_ids = [int(genre_id) for genre_id in genre_ids]
 
-    if len(genre_ids) > 5:
-        edited_review = {
-            "id": review_id,
-            "title": title,
-            "author": author,
-            "rating": rating,
-            "review": review_text,
-            "user_id": session["user_id"]
-        }
+    edited_review = {
+        "id": review_id,
+        "title": title,
+        "author": author,
+        "rating": rating,
+        "review": review_text,
+        "user_id": session["user_id"]
+    }
 
+    errors = []
+
+    if not title.strip():
+        errors.append("Kirjan nimi ei voi olla tyhjä")
+    elif len(title.strip()) > 150:
+        errors.append("Kirjan nimi saa olla enintään 150 merkkiä pitkä")
+
+    if not author.strip():
+        errors.append("Kirjailija ei voi olla tyhjä")
+    else:
+        if len(author.strip()) < 2:
+            errors.append("Kirjailijan nimen tulee olla vähintään 2 merkkiä pitkä")
+
+        if len(author.strip()) > 100:
+            errors.append("Kirjailijan nimi saa olla enintään 100 merkkiä pitkä")
+
+        if not any(char.isalpha() for char in author):
+            errors.append("Kirjailijan nimessä tulee olla vähintään yksi kirjain")
+
+    if not rating.strip():
+        errors.append("Arvosana ei voi olla tyhjä")
+
+    if not review_text.strip():
+        errors.append("Arvio ei voi olla tyhjä")
+
+    if not genre_ids:
+        errors.append("Valitse vähintään yksi genre")
+    elif len(genre_ids) > 5:
+        errors.append("Voit valita enintään 5 genreä")
+
+    if errors:
         return render_template(
             "edit_review.html",
             review=edited_review,
             genres=all_genres,
             selected_genre_ids=selected_genre_ids,
-            error="Voit valita enintään 5 genreä"
+            errors=errors
         )
 
-    reviews.update_review(review_id, title, author, rating, review_text)
+    reviews.update_review(
+        review_id,
+        title.strip(),
+        author.strip(),
+        rating,
+        review_text.strip()
+    )
 
     genres.delete_review_genres(review_id)
     genres.add_review_genres(review_id, genre_ids)

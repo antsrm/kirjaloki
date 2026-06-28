@@ -4,8 +4,12 @@
 
 <h2>Muokkaa kirja-arviota</h2>
 
-{% if error %}
-<p class="error">{{ error }}</p>
+{% if errors %}
+<ul class="error-list">
+    {% for error in errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
 
 <form action="/edit_review/{{ review.id }}" method="post">
@@ -35,7 +39,7 @@
     </p>
 
     <p>
-        Genret, valitse enintään 3:<br>
+        Genret, valitse enintään 5:<br>
 
         {% for genre in genres %}
             <label>
@@ -52,8 +56,8 @@
     </p>
 
     <button class="button" type="submit">
-    <img src="/static/icons/check.svg" alt="" class="button-icon">
-    Tallenna muutokset
+        <img src="/static/icons/check.svg" alt="" class="button-icon">
+        Tallenna muutokset
     </button>
 
 </form>
